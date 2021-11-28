@@ -1,5 +1,6 @@
 package com.example.oeientation
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         var ps_flag = false
 
         bt_login.setOnClickListener{
-            Toast.makeText(applicationContext,"準備登入",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this,Login::class.java))
         }
 
         bt_password.setOnCheckedChangeListener{_,isChecked->
