@@ -1,13 +1,14 @@
 package com.example.oeientation
 
-import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.oeientation.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         auth= FirebaseAuth.getInstance()
 
+        val bt_login = binding.login
+        val bt_password = binding.passwordview
         val accountinput = binding.accountinput
         val passwordinput = binding.passwordinput
         val account = binding.account
@@ -31,6 +34,24 @@ class MainActivity : AppCompatActivity() {
         val pattern = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[^ ]{8,16}\$")
         var ac_flag = false
         var ps_flag = false
+
+        bt_login.setOnClickListener{
+            Toast.makeText(applicationContext,"準備登入",Toast.LENGTH_SHORT).show()
+        }
+
+        bt_password.setOnCheckedChangeListener{_,isChecked->
+            if(isChecked){
+                passwordinput.setTransformationMethod(HideReturnsTransformationMethod.getInstance())
+            }
+            else{
+                //否則隱藏密碼
+                passwordinput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+            }
+        }
+
+
+
 
         bt_r.setOnClickListener{
             if(accountinput.text.toString() == ""){
@@ -53,9 +74,7 @@ class MainActivity : AppCompatActivity() {
             {
                 auth.createUserWithEmailAndPassword(accountinput.text.toString(),passwordinput.text.toString()).addOnCompleteListener { task ->
                     if(task.isSuccessful){
-                        val intent= Intent(this,MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        Toast.makeText(applicationContext,"帳號創立成功",Toast.LENGTH_SHORT).show()
                     }
                 }.addOnFailureListener { exception ->
                     Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
