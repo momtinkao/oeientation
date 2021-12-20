@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(accountinput.text.toString(),passwordinput.text.toString()).addOnCompleteListener { task ->
                     if(task.isSuccessful){
                         Toast.makeText(applicationContext,"帳號創立成功",Toast.LENGTH_SHORT).show()
+
                     }
                 }.addOnFailureListener { exception ->
                     Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
